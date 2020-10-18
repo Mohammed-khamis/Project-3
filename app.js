@@ -1,5 +1,5 @@
 const express = require("express");
-const registerRouter = require('./routes/register');
+const registerRouter = require('./routes/registerRoutes');
 require("dotenv").config();
 
 const app = express();
