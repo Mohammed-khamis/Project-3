@@ -7,9 +7,4 @@ app.use(express.json());
 app.use(registerRouter);
 
 
-
-
-const port = 3000 || process.env.PORT;
-app.listen(port, () => {
-    console.log(`App is listening on http://localhost:${port}`);
-});
+module.exports = app;
