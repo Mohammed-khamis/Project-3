@@ -1,0 +1,23 @@
+{
+  "name": "facebook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev":  "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mohammed-khamis/Project-3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mohammed-khamis/Project-3/issues"
+  },
+  "homepage": "https://github.com/Mohammed-khamis/Project-3#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
