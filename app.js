@@ -1,8 +1,10 @@
-const registerRouter = require('./routes/register');
 const express = require("express");
+const registerRouter = require('./routes/register');
+require("dotenv").config();
+
 const app = express();
 
-require("dotenv").config();
+//Middlewares
 app.use(express.json());
 app.use(registerRouter);
 
