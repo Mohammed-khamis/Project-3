@@ -23,10 +23,6 @@ db.on("connected", () => console.log("MONGO CONNECTED"));
 db.on("disconnected", () => console.log("MONGO DISCONNECTED"));
 
 
-
-
-
-
 const port = 3000 || process.env.PORT;
 app.listen(port, () => {
   console.log(`App is listening on http://localhost:${port}`);

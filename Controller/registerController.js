@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const Account = require('../models/registerModel');
 
 const hashPassword = (password) => {
   return bcrypt.hash(password, Number(process.env.SALT));
