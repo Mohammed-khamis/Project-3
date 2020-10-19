@@ -24,9 +24,27 @@ const allAccounts = async (req, res) => {
     }
 };
 
-const updateAccount = (req, res) => {};
+const updateAccount = async (req, res) => {
+    try {
+        if (req.body.password) req.body.password = await hashPassword(req.body.password);
+        const account = await Account.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true
+        });
+        res.status(200).json(account);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+};
 
-const deleteAccount = (req, res) => {};
+const deleteAccount = async (req, res) => {
+    try {
+        const account = await Account.findByIdAndDelete(req.params.id);
+        res.status(200).json("The account has been deleted!");
+    } catch (err) {
+      res.status(400).json(err);
+    }
+};
 
 module.exports = {
   allAccounts,
