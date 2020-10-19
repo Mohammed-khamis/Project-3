@@ -5,13 +5,23 @@ const hashPassword = (password) => {
   return bcrypt.hash(password, Number(process.env.SALT));
 };
 
-const allAccounts = (req, res) => {
-  
+const creatNewAccount = async (req, res) => {
+    try {
+        req.body.password = await hashPassword(req.body.password);
+        const newAccount = await Account.create(req.body);
+        res.status(201).json(newAccount);   
+    } catch (err) {
+        res.status(400).json(err);
+    }
 };
 
-const creatNewAccount = async (req, res) => {
-  
-  
+const allAccounts = async (req, res) => {
+    try {
+        const accounts = await Account.find();
+        res.status(200).json(accounts);  
+    } catch (err) {
+        res.status(400).json(err);
+    }
 };
 
 const updateAccount = (req, res) => {};

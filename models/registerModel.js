@@ -4,7 +4,6 @@ const registerSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "you must fill your name"],
-    unique: true,
     },
   email: {
     type: String,

@@ -7,8 +7,8 @@ const authRouter = express.Router();
 
 authRouter.get('/accounts', allAccounts);
 authRouter.post("/signUp", creatNewAccount);
-authRouter.put("/account/:name", updateAccount);
-authRouter.delete('/account/:name', deleteAccount);
+authRouter.put("/account/:id", updateAccount);
+authRouter.delete('/account/:id', deleteAccount);
 
 
 module.exports = authRouter;

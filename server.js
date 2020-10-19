@@ -3,6 +3,8 @@ const app = require('./app');
 
 require("dotenv").config();
 
+
+//Make connection with the mongoDB
 const db = mongoose.connection;
 
 const options = {
@@ -17,9 +19,7 @@ mongoose.connect(process.env.DB_URL, options, () => {
 
 // handle error / sucess
 db.on("error", (err) => console.log("ERR:", err.message));
-
 db.on("connected", () => console.log("MONGO CONNECTED"));
-
 db.on("disconnected", () => console.log("MONGO DISCONNECTED"));
 
 
