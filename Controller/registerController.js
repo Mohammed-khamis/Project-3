@@ -45,7 +45,7 @@ const deleteAccount = async (req, res) => {
         const account = await Account.findById(req.params.id);
         const password = await bcrypt.compare(req.body.password, account.password);
         if(!password) res.status(400).json("Invalid Password");
-        await account.deleteOne();
+        else await account.deleteOne();
         res.status(200).json("The account has been deleted!");
 
     } catch (err) {
