@@ -21,7 +21,7 @@ const creatNewUser = async (req, res) => {
         res.status(404).json({
           status: "fail",
           data: {
-            message: err,
+            message: "The User is already exist",
           },
         });
     }
