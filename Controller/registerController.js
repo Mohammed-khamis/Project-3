@@ -26,15 +26,30 @@ const allAccounts = async (req, res) => {
     }
 };
 
+const getTheAccount = async (req, res) => {
+  try {
+    let account = await Account.find({name: req.body.name});
+    if(account.length === 0) account = await Account.find({email: req.body.email});
+    if (account.length === 0) res.status(404).json("Invalid name or email");
+    res.status(200).json(account);
+
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
 const updateAccount = async (req, res) => {
     try {
-        if (req.body.password) req.body.password = await hashPassword(req.body.password);
-        const account = await Account.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true
-        });
+        let account = await Account.findById(req.params.id);
+        if (!account) res.status(400).json("Invalid ID");
+        const password = await bcrypt.compare(req.body[0].password, account.password);
+        if(!password) res.status(400).json("Invalid Password");
+        account = await Account.updateOne(
+          { name: req.body[1].name },
+          { email: req.body[1].email },
+          { password: await bcrypt.hash(req.body[1].newPassword) }
+        );
         res.status(200).json(account);
-
     } catch (err) {
       res.status(400).json(err);
     }
@@ -43,6 +58,7 @@ const updateAccount = async (req, res) => {
 const deleteAccount = async (req, res) => {
     try {
         const account = await Account.findById(req.params.id);
+        if(!account) res.status(400).json("Invalid ID");
         const password = await bcrypt.compare(req.body.password, account.password);
         if(!password) res.status(400).json("Invalid Password");
         else await account.deleteOne();
@@ -55,6 +71,7 @@ const deleteAccount = async (req, res) => {
 
 module.exports = {
   allAccounts,
+  getTheAccount,
   creatNewAccount,
   updateAccount,
   deleteAccount,

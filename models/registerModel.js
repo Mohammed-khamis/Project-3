@@ -4,16 +4,17 @@ const registerSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "you must fill your name"],
-    },
+    unique: true,
+  },
   email: {
     type: String,
     required: [true, "you must fill your email"],
     unique: true,
-    },
-  password: { 
-      type: String, 
-      required: [true, "you must fill your password"] 
-    },
+  },
+  password: {
+    type: String,
+    required: [true, "you must fill your password"],
+  },
 });
 
 const Account = mongoose.model("Account", registerSchema);
