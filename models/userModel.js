@@ -13,6 +13,15 @@ const registerSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, "please provide a valid email"],
   },
+  password: {
+    type: String,
+    required: [true, "Please provide a password"],
+    minlength: 8,
+  },
+  passwordConfirm: {
+    type: String,
+    required: [true, "Please confirm your password"],
+  },
   gender: {
     type: String,
     required: true,
@@ -35,12 +44,3 @@ const user = mongoose.model("user", registerSchema);
 
 module.exports = user;
 
-/*password: {
-    type: String,
-    required: [true, "Please provide a password"],
-    minlength: 8,
-  },
-  passwordConfirm: {
-    type: String,
-    required: [true, "Please confirm your password"],
-  },*/
