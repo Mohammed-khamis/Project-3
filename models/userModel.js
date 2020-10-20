@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcrypt");
 
-const registerSchema = new mongoose.Schema({
+require("dotenv").config();
+
+
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please provide  your name"],
@@ -17,22 +21,26 @@ const registerSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a password"],
     minlength: 8,
+    select: false
   },
   passwordConfirm: {
     type: String,
     required: [true, "Please confirm your password"],
+    validate:{
+      validator: function(element) {
+        return element === this.password
+      },
+      message: "Passwords are not the same!",
+    }
   },
   gender: {
     type: String,
-    required: true,
   },
   dateOfBirth: {
     type: String,
-    required: true,
   },
   phoneNumber: {
     type: Number,
-    required: true,
   },
   joinedAt: {
     type: Date,
@@ -40,7 +48,19 @@ const registerSchema = new mongoose.Schema({
   },
 });
 
-const user = mongoose.model("user", registerSchema);
 
-module.exports = user;
+userSchema.pre('save', async function (next) {
+  if(!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, Number(process.env.SALT));
+  this.passwordConfirm = undefined;
+  next();
+});
+
+userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
 

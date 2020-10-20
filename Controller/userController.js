@@ -1,11 +1,5 @@
-const bcrypt = require("bcrypt");
-const { findByIdAndUpdate } = require("../models/userModel");
-const user = require("../models/userModel");
 const User = require('../models/userModel');
 
-const hashPassword = (password) => {
-  return bcrypt.hash(password, Number(process.env.SALT));
-};
 
 const creatNewUser = async (req, res) => {
     try {
@@ -18,10 +12,10 @@ const creatNewUser = async (req, res) => {
         }
       });     
     } catch (err) {
-        res.status(404).json({
+        res.status(400).json({
           status: "fail",
           data: {
-            message: "The User is already exist",
+            message: err,
           },
         });
     }
