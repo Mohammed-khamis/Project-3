@@ -74,9 +74,3 @@ module.exports = {
 }
 
 
-/*const newUser = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        passwordConfirm: req.body.passwordConfirm,
-      });*/
