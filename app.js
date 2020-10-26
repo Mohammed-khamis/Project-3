@@ -1,22 +1,16 @@
-const express = require("express");
-const morgan = require("morgan");
-
-const AppError = require('./utils/appError');
-const globalErrorHandler = require('./Controller/errorController');
+const express = require('express');
+const morgan = require('morgan');
+const postRouter = require('./routes/postRoutes');
 const userRouter = require('./routes/userRoutes');
-
-
+const authRouter = require('./routes/authRoutes');
 const app = express();
 
 //Middlewares
-app.use(morgan('dev'));
 app.use(express.json());
-app.use(userRouter);
+app.use(morgan('dev'));
 
-app.all('*', (req, res, next) => {
-    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-});
-app.use(globalErrorHandler);
-
+app.use('/api/posts', postRouter);
+app.use('/api/users', userRouter);
+app.use('/api/auth', authRouter);
 
 module.exports = app;

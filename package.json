@@ -1,32 +1,23 @@
 {
-  "name": "facebook",
+  "name": "project3",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "scripts": {
-    "start": "nodemon server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Mohammed-khamis/Project-3.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Mohammed-khamis/Project-3/issues"
-  },
-  "homepage": "https://github.com/Mohammed-khamis/Project-3#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "gravatar": "^1.8.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.9",
+    "mongoose": "^5.10.10",
     "morgan": "^1.10.0",
     "validator": "^13.1.17"
   },
-  "engines": {
-    "node": ">=10.0.0"
-  }
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC"
 }
