@@ -91,3 +91,36 @@ exports.deleteProfile = async (req, res) => {
     });
   }
 };
+
+exports.updateProfileData = async (req, res) => {
+  const { company, job, fieldOfStudy, location, bio, dateOfBirth, phoneNumber } = req.body;
+  const newProfileFields = {
+    company,
+    job,
+    fieldOfStudy,
+    location,
+    bio,
+    dateOfBirth,
+    phoneNumber,
+  };
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+    if (company) profile.company = newProfileFields.company;
+    if (job) profile.job = newProfileFields.job;
+    if (fieldOfStudy) profile.fieldOfStudy = newProfileFields.fieldOfStudy;
+    if (location) profile.location = newProfileFields.location;
+    if (bio) profile.bio = bio;
+    if (dateOfBirth) profile.dateOfBirth = newProfileFields.dateOfBirth;
+    if (phoneNumber) profile.phoneNumber = newProfileFields.phoneNumber;
+
+    await profile.save();
+    res.status(200).json(profile);
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
+
