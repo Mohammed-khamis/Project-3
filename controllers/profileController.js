@@ -1,12 +1,5 @@
 const Profile = require('./../models/profileModel');
 const User = require('./../models/userModel');
-const { check, validationResult } = require('express-validator');
-
-exports.checkResults = [
-  check('name', 'Name is required').not().isEmpty(),
-  check('email', 'please include a valid email').isEmail(),
-  check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 }),
-];
 
 exports.getProfile = async (req, res) => {
   try {
@@ -50,6 +43,47 @@ exports.createProfile = async (req, res) => {
     profile = new Profile(profileFields);
     await profile.save();
     res.json(profile);
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
+exports.getAllProfiles = async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+    res.json(profiles);
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
+exports.getProfilebyUserID = async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.params.user_id }).populate('user', [
+      'name',
+      'avatar',
+    ]);
+    if (!profile) return res.status(400).json({ msg: 'There is no profile for this user' });
+    res.json(profile);
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: err,
+    });
+  }
+};
+
+exports.deleteProfile = async (req, res) => {
+  try {
+    await Profile.findOneAndRemove({ user: req.user.id });
+    await User.findOneAndRemove({ _id: req.user.id });
+    res.json({ msg: 'User deleted' });
   } catch (err) {
     res.status(400).json({
       status: 'fail',

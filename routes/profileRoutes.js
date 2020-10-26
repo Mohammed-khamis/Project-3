@@ -1,10 +1,19 @@
 const express = require('express');
-const { getProfile, checkResults, createProfile } = require('./../controllers/profileController');
+const {
+  getProfile,
+  createProfile,
+  getAllProfiles,
+  getProfilebyUserID,
+  deleteProfile,
+} = require('./../controllers/profileController');
 const auth = require('./../middleware/auth');
 
 const router = express.Router();
 
+router.post('/', auth, createProfile);
 router.get('/', auth, getProfile);
-router.post('/', auth, checkResults, createProfile);
+router.get('/profiles', getAllProfiles);
+router.get('/user/:user_id', getProfilebyUserID);
+router.delete('/', auth, deleteProfile);
 
 module.exports = router;
